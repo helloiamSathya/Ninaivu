@@ -60,3 +60,9 @@ A photo calendar for iOS and Android. It shows each photo on the day it was take
 - `design/mockups/`: early PNG mockups (lilac, superseded by the Figma board)
 - `design/brand/`: logo SVG from the owner
 - `design/figma/`: exported previews of the Figma board
+
+## Day colours (decision, 2026-11-26)
+Calendar days with photos are tinted with the average colour of up to 4 of that day's photos, softened to a pastel (same hue, lightness 86%, saturation 30-55%) with a small photo inset. Per-photo colours are cached in SQLite (`photo_colors`). Android uses `average`; iOS has no average, so it uses `background`. Code: src/colors.ts. Mockup: design/mockups/4-pastel-calendar.png.
+
+## Gotti VF logo
+Adobe Fonts files cannot be exported. Activate Gotti VF in Illustrator/Photoshop/Express, type "Ninaivu", Type > Create Outlines, export SVG, and upload it. Check Adobe's licence before embedding the font itself in the app.
