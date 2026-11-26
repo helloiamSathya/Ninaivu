@@ -16,6 +16,7 @@ function getDb() {
         month INTEGER NOT NULL,        -- 1-12
         day INTEGER NOT NULL
       );
+      CREATE TABLE IF NOT EXISTS settings (key TEXT PRIMARY KEY NOT NULL, value TEXT NOT NULL);
       CREATE TABLE IF NOT EXISTS photo_colors (photo_id TEXT PRIMARY KEY NOT NULL, color TEXT NOT NULL);
     `);
     return db;
@@ -79,4 +80,15 @@ export async function getPhotoColors(ids: string[]): Promise<Record<string, stri
 export async function setPhotoColor(id: string, color: string) {
   const db = await getDb();
   await db.runAsync('INSERT OR REPLACE INTO photo_colors (photo_id, color) VALUES (?, ?)', id, color);
+}
+
+export async function getSetting<T>(key: string, fallback: T): Promise<T> {
+  const db = await getDb();
+  const row = await db.getFirstAsync<{ value: string }>('SELECT value FROM settings WHERE key = ?', key);
+  return row ? (JSON.parse(row.value) as T) : fallback;
+}
+
+export async function setSetting(key: string, value: unknown) {
+  const db = await getDb();
+  await db.runAsync('INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)', key, JSON.stringify(value));
 }

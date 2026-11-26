@@ -68,3 +68,6 @@ Calendar days with photos are tinted with the average colour of up to 4 of that 
 Adobe Fonts files cannot be exported. Activate Gotti VF in Illustrator/Photoshop/Express, type "Ninaivu", Type > Create Outlines, export SVG, and upload it. Check Adobe's licence before embedding the font itself in the app.
 
 Update 2026-11-27: real Gotti outlines received (assets/brand/ninaivu-logo-outlined.svg) and wired into src/logo/logoPaths.ts, so the splash now draws the real logo. Figma still shows the stand-in logo and the old palette because the Figma Starter plan's MCP call limit blocks edits again.
+
+## Photo sources (decision, 2026-11-27)
+The calendar shows camera photos only by default. Screenshots, WhatsApp and other chat or download folders stay off until the user switches them on in Settings > Photo sources (src/SourcesScreen.tsx, src/sources.ts). Android reads only the chosen folders. iOS has no camera-only folder, so it reads the whole library and hides screenshots and photos in folders that are switched off. Turning a folder off only hides it in Ninaivu; nothing is deleted.

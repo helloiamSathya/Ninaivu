@@ -6,6 +6,7 @@ import { Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'rea
 import Splash from './src/Splash';
 import CalendarScreen from './src/CalendarScreen';
 import DayScreen from './src/DayScreen';
+import SourcesScreen from './src/SourcesScreen';
 import { ensurePhotoPermission, Photo } from './src/photos';
 
 type OpenDay = { day: string; photos: Photo[]; suggestions: string[]; name?: string };
@@ -16,6 +17,7 @@ export default function App() {
   const [granted, setGranted] = useState<boolean | null>(null);
   const [open, setOpen] = useState<OpenDay | null>(null);
   const [refreshToken, setRefreshToken] = useState(0);
+  const [sources, setSources] = useState(false);
 
   useEffect(() => {
     ensurePhotoPermission().then(setGranted);
@@ -42,7 +44,14 @@ export default function App() {
   return (
     <SafeAreaView style={styles.fill}>
       <StatusBar style="dark" />
-      {open ? (
+      {sources ? (
+        <SourcesScreen
+          onClose={(changed) => {
+            setSources(false);
+            if (changed) setRefreshToken((t) => t + 1);
+          }}
+        />
+      ) : open ? (
         <DayScreen
           {...open}
           onClose={(changed) => {
@@ -54,6 +63,7 @@ export default function App() {
         <ScrollView>
           <CalendarScreen
             refreshToken={refreshToken}
+            onOpenSources={() => setSources(true)}
             onOpenDay={(day, photos, suggestions, name) => setOpen({ day, photos, suggestions, name })}
           />
         </ScrollView>

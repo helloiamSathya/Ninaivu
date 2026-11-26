@@ -7,9 +7,9 @@ import { getDayNames } from './db';
 import { suggestionsForMonth } from './occasions';
 import { loadMonthPhotos, Photo } from './photos';
 
-type Props = { onOpenDay: (day: string, photos: Photo[], suggestions: string[], name?: string) => void; refreshToken: number };
+type Props = { onOpenDay: (day: string, photos: Photo[], suggestions: string[], name?: string) => void; refreshToken: number; onOpenSources: () => void };
 
-export default function CalendarScreen({ onOpenDay, refreshToken }: Props) {
+export default function CalendarScreen({ onOpenDay, refreshToken, onOpenSources }: Props) {
   const now = new Date();
   const [year, setYear] = useState(now.getFullYear());
   const [month, setMonth] = useState(now.getMonth());
@@ -53,9 +53,15 @@ export default function CalendarScreen({ onOpenDay, refreshToken }: Props) {
         <Text style={styles.title}>
           {MONTH_NAMES[month]} {year}
         </Text>
-        <Pressable onPress={() => shift(1)} hitSlop={12} accessibilityLabel="Next month">
-          <Text style={styles.arrow}>›</Text>
-        </Pressable>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Pressable onPress={() => shift(1)} hitSlop={12} accessibilityLabel="Next month">
+            <Text style={styles.arrow}>›</Text>
+          </Pressable>
+          {/* Temporary entry until the Settings tab is built */}
+          <Pressable onPress={onOpenSources} hitSlop={12} accessibilityLabel="Photo sources">
+            <Text style={styles.gear}>⚙</Text>
+          </Pressable>
+        </View>
       </View>
       <View style={styles.row}>
         {WEEKDAYS.map((w) => (
@@ -98,6 +104,7 @@ const styles = StyleSheet.create({
   wrap: { padding: 8 },
   header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 12, paddingHorizontal: 8 },
   title: { fontFamily: FONT, fontSize: 20, fontWeight: '600' },
+  gear: { fontSize: 20, paddingHorizontal: 8, color: COLORS.ink },
   arrow: { fontFamily: FONT, fontSize: 32, paddingHorizontal: 12 },
   row: { flexDirection: 'row' },
   weekday: { flex: 1, textAlign: 'center', color: COLORS.muted, paddingVertical: 4 },
