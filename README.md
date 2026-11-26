@@ -18,4 +18,4 @@ Gallery access needs a development build (`npx expo run:android` / `run:ios`), b
 - `src/`: app code (screens, database, photo reading, occasions, theme)
 - `assets/fonts/`: Geist variable font used across the app
 - `docs/`: specs; `PROJECT.md`: decisions, status and open questions
-- `design/`: reference UI image and mockups
+- `design/`: reference UI image and mockups; `assets/brand/`: logo; `scripts/`: logo outline generator

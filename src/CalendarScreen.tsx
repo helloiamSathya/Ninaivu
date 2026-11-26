@@ -1,4 +1,4 @@
-import { FONT } from './theme';
+import { COLORS, FONT } from './theme';
 import { useCallback, useEffect, useState } from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { MONTH_NAMES, WEEKDAYS, dayKey, monthGrid } from './dates';
@@ -96,12 +96,12 @@ const styles = StyleSheet.create({
   title: { fontFamily: FONT, fontSize: 20, fontWeight: '600' },
   arrow: { fontFamily: FONT, fontSize: 32, paddingHorizontal: 12 },
   row: { flexDirection: 'row' },
-  weekday: { flex: 1, textAlign: 'center', color: '#666', paddingVertical: 4 },
-  cell: { flex: 1, aspectRatio: 0.7, margin: 1, backgroundColor: '#f2f2f2', borderRadius: 6, overflow: 'hidden', padding: 3 },
-  today: { borderWidth: 2, borderColor: '#2f6fed' },
+  weekday: { flex: 1, textAlign: 'center', color: COLORS.muted, paddingVertical: 4 },
+  cell: { flex: 1, aspectRatio: 0.7, margin: 1, backgroundColor: COLORS.surface, borderRadius: 10, overflow: 'hidden', padding: 3 },
+  today: { borderWidth: 2, borderColor: COLORS.accent2 },
   dayNum: { fontFamily: FONT, fontSize: 12, fontWeight: '600' },
-  onPhoto: { color: '#fff', textShadowColor: '#000', textShadowRadius: 3 },
-  count: { position: 'absolute', top: 2, right: 4, fontFamily: FONT, fontSize: 10, color: '#fff', textShadowColor: '#000', textShadowRadius: 3 },
-  label: { position: 'absolute', bottom: 0, left: 0, right: 0, fontFamily: FONT, fontSize: 9, backgroundColor: 'rgba(47,111,237,0.85)', color: '#fff', paddingHorizontal: 2 },
-  suggested: { backgroundColor: 'rgba(0,0,0,0.45)', fontStyle: 'italic' },
+  onPhoto: { color: COLORS.onPrimary, textShadowColor: COLORS.deep, textShadowRadius: 3 },
+  count: { position: 'absolute', top: 2, right: 4, fontFamily: FONT, fontSize: 10, color: COLORS.onPrimary, textShadowColor: COLORS.deep, textShadowRadius: 3 },
+  label: { position: 'absolute', bottom: 0, left: 0, right: 0, fontFamily: FONT, fontSize: 9, backgroundColor: COLORS.primary, color: COLORS.onPrimary, paddingHorizontal: 2 },
+  suggested: { backgroundColor: COLORS.accent2, fontStyle: 'italic' },
 });
