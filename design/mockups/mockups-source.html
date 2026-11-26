@@ -1,0 +1,80 @@
+<!doctype html><html><head><meta charset="utf-8"><style>@font-face{font-family:'Geist';src:url('Geist.ttf');font-weight:100 900}
+:root{--bg:#b9aed1;--card:#d8cfe6;--card2:#e9e4f1;--pink:#d9a6ae;--ink:#141218;--mute:#6f6780;--white:#fff;--accent:#7a56c8}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);font-family:'Geist',sans-serif;color:var(--ink);padding:40px;display:flex;gap:40px}
+.phone{width:390px;height:844px;border-radius:44px;background:#efeaf4;position:relative;overflow:hidden;box-shadow:0 30px 60px rgba(60,40,100,.25)}
+.top{background:#fff;border-radius:0 0 36px 36px;padding:56px 20px 18px}
+.row{display:flex;align-items:center;justify-content:space-between}
+h1{font-size:22px;font-weight:600}
+.circle{width:44px;height:44px;border-radius:50%;border:1px solid #ddd;display:grid;place-items:center;font-size:22px;background:#fff}
+.week{display:flex;gap:6px;margin-top:16px}
+.wd{flex:1;border-radius:22px;background:#f1eef5;text-align:center;padding:8px 0;font-size:11px;color:var(--mute)}
+.wd b{display:block;font-size:16px;color:var(--ink);margin-top:4px;font-weight:600}
+.wd.on{background:var(--ink);color:#fff}.wd.on b{color:#fff}
+.mhead{display:flex;justify-content:space-between;align-items:center;padding:18px 20px 6px}
+.mhead h2{font-size:26px;font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;padding:6px 14px}
+.dow{font-size:11px;color:var(--mute);text-align:center}
+.d{aspect-ratio:.78;border-radius:14px;background:var(--card2);position:relative;overflow:hidden;font-size:11px;font-weight:600;padding:4px 5px}
+.d.ph{color:#fff}
+.d .n{position:relative;z-index:2;text-shadow:0 1px 3px rgba(0,0,0,.5)}
+.d .tag{position:absolute;bottom:0;left:0;right:0;font-size:8px;background:rgba(20,18,24,.7);color:#fff;padding:2px 4px;z-index:2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.d .cnt{position:absolute;right:5px;top:4px;font-size:9px;color:#fff;z-index:2}
+.d.today{outline:2.5px solid var(--ink)}
+.sug{background:rgba(20,18,24,.35)!important;font-style:italic}
+.nav{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);display:flex;gap:10px;padding:8px;border-radius:40px;background:rgba(255,255,255,.55);backdrop-filter:blur(8px)}
+.nav i{width:56px;height:48px;border-radius:30px;display:grid;place-items:center;font-style:normal;font-size:20px;background:rgba(255,255,255,.7)}
+.nav i.on{background:var(--ink);color:#fff;width:96px}
+.card{margin:12px 14px;border-radius:30px;background:var(--card);padding:18px}
+.pink{background:var(--pink)}
+.pill{display:inline-block;padding:9px 16px;border-radius:22px;background:#e6dff0;font-size:13px;margin-right:6px}
+.pill.on{background:var(--ink);color:#fff}
+.hero{height:230px;border-radius:0 0 0 0;position:relative;background:linear-gradient(135deg,#8f6fd4,#e58fb0 60%,#f2c7a0);padding:56px 20px 0}
+.hero .circle{border:none}
+.lbl{font-size:14px;color:rgba(255,255,255,.85);margin-top:34px}
+.big{font-size:38px;font-weight:600;color:#fff;line-height:1.05}
+.photos{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:0 14px}
+.p{aspect-ratio:1;border-radius:18px}
+.chip{display:inline-block;padding:8px 14px;border-radius:20px;background:#fff;font-size:13px;margin:0 6px 6px 0;border:1px solid #e2dbee}
+.input{background:#fff;border-radius:26px;padding:14px 18px;font-size:15px;color:var(--mute);margin:10px 14px}
+</style></head><body>
+
+<div id="s1" class="phone">
+ <div class="top"><div class="row"><div><div style="font-size:13px;color:var(--mute)">Hello, Sathya</div><h1 style="font-size:30px;line-height:1.1;margin-top:4px">Your memories</h1></div><div class="circle">⌕</div></div>
+ <div class="week" id="wk"></div></div>
+ <div class="mhead"><h2>November 2026 ⌄</h2><div class="circle">＋</div></div>
+ <div class="grid" id="g"></div>
+ <div class="nav"><i>▤</i><i class="on">▦</i><i>◎</i></div>
+</div>
+
+<div id="s2" class="phone">
+ <div class="hero"><div class="row"><div class="circle">←</div><div style="display:flex;gap:8px"><div class="circle">⤴</div><div class="circle">⋯</div></div></div>
+ <div class="lbl">Wed, 14 Jan 2026</div><div class="big">Pongal</div></div>
+ <div style="padding:14px"><span class="pill">All</span><span class="pill on">Photos 12</span><span class="pill">Notes</span></div>
+ <div class="input">Pongal · tap to rename</div>
+ <div style="padding:0 14px 8px"><span class="chip">Pongal</span><span class="chip">Bhogi</span><span class="chip">Family lunch</span></div>
+ <div class="photos" id="ph"></div>
+ <div class="nav"><i>▤</i><i class="on">▦</i><i>◎</i></div>
+</div>
+
+<div id="s3" class="phone">
+ <div class="top"><div class="row"><h1 style="font-size:30px">Occasions</h1><div class="circle">＋</div></div>
+ <div style="margin-top:14px"><span class="pill on">Upcoming</span><span class="pill">Birthdays</span><span class="pill">Festivals</span></div></div>
+ <div class="card"><div class="row"><b style="font-size:22px">Amma's birthday</b><span>⋯</span></div><div style="color:var(--mute);margin-top:6px;font-size:13px">Suggested from your saved birthday</div><div style="margin-top:16px;font-size:34px;font-weight:600">Dec 3 <span style="font-size:14px;font-weight:400;color:var(--mute)">· in 8 days</span></div></div>
+ <div class="card pink"><div class="row"><b style="font-size:22px">Christmas</b><span>⋯</span></div><div style="margin-top:6px;font-size:13px">Photos from past years: 3</div><div style="margin-top:16px;font-size:34px;font-weight:600">Dec 25</div></div>
+ <div class="card" style="background:#e9e4f1"><b style="font-size:20px">Pongal</b><div style="color:var(--mute);font-size:13px;margin-top:6px">Jan 14 · Festival</div></div>
+ <div class="nav"><i>▤</i><i>▦</i><i class="on">◎</i></div>
+</div>
+
+<script>
+const grads=['#8f6fd4,#e58fb0','#5aa7c9,#b9e0d0','#e9a36a,#f2d38c','#6b8fd6,#c3a6e8','#d27a8f,#f0b9a8','#59b08a,#cfe8a7','#9a7ad8,#6fb6e6'];
+// week strip
+const wk=document.getElementById('wk');['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach((n,i)=>{wk.innerHTML+=`<div class="wd ${i==3?'on':''}">${n}<b>${22+i>30?22+i-30:22+i}</b></div>`});
+// month grid Nov 2026 starts Sunday
+const g=document.getElementById('g');['S','M','T','W','T','F','S'].forEach(x=>g.innerHTML+=`<div class="dow">${x}</div>`);
+const photos={1:2,3:5,7:1,8:3,12:4,14:9,15:2,19:1,21:6,22:3,25:2,28:7};
+const names={14:"Children's Day",8:'Diwali trip',21:"Ravi's wedding"};const sug={14:1};
+for(let d=1;d<=30;d++){const p=photos[d];const gr=grads[d%7];
+g.innerHTML+=`<div class="d ${p?'ph':''} ${d==25?'today':''}" style="${p?`background:linear-gradient(135deg,${gr})`:''}"><span class="n">${d}</span>${p>1?`<span class="cnt">${p}</span>`:''}${names[d]?`<span class="tag ${sug[d]?'sug':''}">${names[d]}</span>`:''}</div>`}
+const ph=document.getElementById('ph');for(let i=0;i<9;i++)ph.innerHTML+=`<div class="p" style="background:linear-gradient(${120+i*20}deg,${grads[i%7]})"></div>`;
+</script></body></html>

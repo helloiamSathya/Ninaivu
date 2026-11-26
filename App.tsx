@@ -1,3 +1,5 @@
+import { FONT } from './src/theme';
+import { useFonts } from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import { Pressable, SafeAreaView, ScrollView, StyleSheet, Text } from 'react-native';
@@ -8,6 +10,7 @@ import { ensurePhotoPermission, Photo } from './src/photos';
 type OpenDay = { day: string; photos: Photo[]; suggestions: string[]; name?: string };
 
 export default function App() {
+  const [fontsLoaded] = useFonts({ [FONT]: require('./assets/fonts/Geist-VariableFont_wght.ttf') });
   const [granted, setGranted] = useState<boolean | null>(null);
   const [open, setOpen] = useState<OpenDay | null>(null);
   const [refreshToken, setRefreshToken] = useState(0);
@@ -16,7 +19,7 @@ export default function App() {
     ensurePhotoPermission().then(setGranted);
   }, []);
 
-  if (granted === null) return <SafeAreaView style={styles.center} />;
+  if (!fontsLoaded || granted === null) return <SafeAreaView style={styles.center} />;
 
   if (!granted) {
     return (
@@ -58,8 +61,8 @@ export default function App() {
 const styles = StyleSheet.create({
   fill: { flex: 1, backgroundColor: '#fff' },
   center: { flex: 1, backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center', padding: 24 },
-  heading: { fontSize: 22, fontWeight: '600', marginBottom: 12 },
-  body: { fontSize: 16, color: '#444', textAlign: 'center', marginBottom: 24 },
+  heading: { fontFamily: FONT, fontSize: 22, fontWeight: '600', marginBottom: 12 },
+  body: { fontFamily: FONT, fontSize: 16, color: '#444', textAlign: 'center', marginBottom: 24 },
   button: { backgroundColor: '#2f6fed', paddingHorizontal: 20, paddingVertical: 12, borderRadius: 10 },
-  buttonText: { color: '#fff', fontSize: 16, fontWeight: '600' },
+  buttonText: { color: '#fff', fontFamily: FONT, fontSize: 16, fontWeight: '600' },
 });

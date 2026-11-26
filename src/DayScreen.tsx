@@ -1,3 +1,4 @@
+import { FONT } from './theme';
 import { useState } from 'react';
 import { Dimensions, FlatList, Image, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { setDayName } from './db';
@@ -62,9 +63,9 @@ export default function DayScreen({ day, photos, suggestions, name, onClose }: P
 const styles = StyleSheet.create({
   wrap: { flex: 1, backgroundColor: '#fff' },
   top: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 16 },
-  title: { fontSize: 18, fontWeight: '600' },
-  link: { color: '#2f6fed', fontSize: 16 },
-  input: { borderWidth: 1, borderColor: '#ccc', borderRadius: 8, margin: 12, padding: 10, fontSize: 16 },
+  title: { fontFamily: FONT, fontSize: 18, fontWeight: '600' },
+  link: { color: '#2f6fed', fontFamily: FONT, fontSize: 16 },
+  input: { borderWidth: 1, borderColor: '#ccc', borderRadius: 8, margin: 12, padding: 10, fontFamily: FONT, fontSize: 16 },
   chips: { flexDirection: 'row', flexWrap: 'wrap', paddingHorizontal: 12, gap: 8, marginBottom: 8 },
   chip: { backgroundColor: '#e8efff', borderRadius: 16, paddingHorizontal: 12, paddingVertical: 6 },
   empty: { textAlign: 'center', color: '#888', marginTop: 32 },

@@ -13,3 +13,9 @@ Gallery access needs a development build (`npx expo run:android` / `run:ios`), b
 - Reads photos from the gallery (never copies them); deleted photos disappear from the calendar.
 - Month calendar with a thumbnail on each day that has photos; tap a day to see its photos and name it.
 - Occasion suggestions from a built-in list plus personal birthdays/anniversaries (stored in on-device SQLite).
+
+## Folders
+- `src/`: app code (screens, database, photo reading, occasions, theme)
+- `assets/fonts/`: Geist variable font used across the app
+- `docs/`: specs; `PROJECT.md`: decisions, status and open questions
+- `design/`: reference UI image and mockups
