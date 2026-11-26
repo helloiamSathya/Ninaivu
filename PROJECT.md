@@ -66,3 +66,5 @@ Calendar days with photos are tinted with the average colour of up to 4 of that 
 
 ## Gotti VF logo
 Adobe Fonts files cannot be exported. Activate Gotti VF in Illustrator/Photoshop/Express, type "Ninaivu", Type > Create Outlines, export SVG, and upload it. Check Adobe's licence before embedding the font itself in the app.
+
+Update 2026-11-27: real Gotti outlines received (assets/brand/ninaivu-logo-outlined.svg) and wired into src/logo/logoPaths.ts, so the splash now draws the real logo. Figma still shows the stand-in logo and the old palette because the Figma Starter plan's MCP call limit blocks edits again.
