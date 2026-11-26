@@ -67,6 +67,6 @@ const styles = StyleSheet.create({
   link: { color: COLORS.primary, fontFamily: FONT, fontSize: 16 },
   input: { borderWidth: 1, borderColor: COLORS.line, borderRadius: 16, backgroundColor: COLORS.surface, margin: 12, padding: 10, fontFamily: FONT, fontSize: 16 },
   chips: { flexDirection: 'row', flexWrap: 'wrap', paddingHorizontal: 12, gap: 8, marginBottom: 8 },
-  chip: { backgroundColor: COLORS.accent, borderRadius: 16, paddingHorizontal: 12, paddingVertical: 6 },
+  chip: { backgroundColor: COLORS.chip, borderRadius: 16, paddingHorizontal: 12, paddingVertical: 6 },
   empty: { textAlign: 'center', color: COLORS.muted, marginTop: 32 },
 });

@@ -16,6 +16,7 @@ A photo calendar for iOS and Android. It shows each photo on the day it was take
 | App name | Ninaivu (confirmed) |
 | Look | Rounded pill buttons, large rounded cards, dark pill bottom nav, week strip (layout style from the reference image) |
 | Colours | Owner's 5 colours: Space Indigo #151E3F, Prussian Blue #030027, Beige #F2F3D9, Light Bronze #DC9E82, Dusty Rose #C16E70 |
+| Pastel shades | Soft Pastel Shades (10 colours, EDDCD2 FFF1E6 FDE2E4 FAD2E1 C5DEDD DBE7E4 F0EFEB D6E2E9 BCD4E6 99C1DE) used with the 5 brand colours: cream FFF1E6 background, stone F0EFEB cards, sand EDDCD2 lines, pink FAD2E1 chips, blues for cool accents. Brand 5 stay for text, buttons, nav, today ring |
 | Logo | Wordmark "Ninaivu" in Gotti VF (design/brand/ninaivu-logo-gotti.svg); opening line-draw animation, then the app starts |
 | Font | Geist (variable font supplied by owner) |
 
@@ -35,6 +36,7 @@ A photo calendar for iOS and Android. It shows each photo on the day it was take
 - [x] UI mockups in the reference style, with Geist
 - [x] Figma UI board with navigation (16 screens, prototype wired)
 - [x] Palette and Splash line-draw animation in the app (stand-in outlines, see below)
+- [ ] Update the Figma board to the pastel shades (blocked: Figma plan call limit)
 - [ ] Rebuild app screens to match the Figma board (bottom nav, header, occasions, settings, premium)
 - [ ] Lunar festival dates table (Pongal, Diwali)
 - [ ] Screen to add birthdays/anniversaries
