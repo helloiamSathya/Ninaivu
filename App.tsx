@@ -7,6 +7,9 @@ import Splash from './src/Splash';
 import CalendarScreen from './src/CalendarScreen';
 import DayScreen from './src/DayScreen';
 import SourcesScreen from './src/SourcesScreen';
+import BottomNav, { Tab } from './src/BottomNav';
+import OccasionsScreen from './src/OccasionsScreen';
+import SettingsScreen from './src/SettingsScreen';
 import { ensurePhotoPermission, Photo } from './src/photos';
 
 type OpenDay = { day: string; photos: Photo[]; suggestions: string[]; name?: string };
@@ -18,6 +21,8 @@ export default function App() {
   const [open, setOpen] = useState<OpenDay | null>(null);
   const [refreshToken, setRefreshToken] = useState(0);
   const [sources, setSources] = useState(false);
+  const [tab, setTab] = useState<Tab>('memories');
+  const bump = () => setRefreshToken((t) => t + 1);
 
   useEffect(() => {
     ensurePhotoPermission().then(setGranted);
@@ -60,13 +65,19 @@ export default function App() {
           }}
         />
       ) : (
-        <ScrollView>
-          <CalendarScreen
-            refreshToken={refreshToken}
-            onOpenSources={() => setSources(true)}
-            onOpenDay={(day, photos, suggestions, name) => setOpen({ day, photos, suggestions, name })}
-          />
-        </ScrollView>
+        <View style={styles.fill}>
+          {tab === 'memories' && (
+            <ScrollView contentContainerStyle={{ paddingBottom: 110 }}>
+              <CalendarScreen
+                refreshToken={refreshToken}
+                onOpenDay={(day, photos, suggestions, name) => setOpen({ day, photos, suggestions, name })}
+              />
+            </ScrollView>
+          )}
+          {tab === 'occasions' && <OccasionsScreen onChanged={bump} />}
+          {tab === 'settings' && <SettingsScreen refreshToken={refreshToken} onOpenSources={() => setSources(true)} />}
+          <BottomNav tab={tab} onChange={setTab} />
+        </View>
       )}
     </SafeAreaView>
   );

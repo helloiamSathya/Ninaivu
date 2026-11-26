@@ -92,3 +92,8 @@ export async function setSetting(key: string, value: unknown) {
   const db = await getDb();
   await db.runAsync('INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)', key, JSON.stringify(value));
 }
+
+export async function deletePersonalEvent(id: number) {
+  const db = await getDb();
+  await db.runAsync('DELETE FROM personal_events WHERE id = ?', id);
+}

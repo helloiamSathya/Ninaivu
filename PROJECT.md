@@ -71,3 +71,8 @@ Update 2026-11-27: real Gotti outlines received (assets/brand/ninaivu-logo-outli
 
 ## Photo sources (decision, 2026-11-27)
 The calendar shows camera photos only by default. Screenshots, WhatsApp and other chat or download folders stay off until the user switches them on in Settings > Photo sources (src/SourcesScreen.tsx, src/sources.ts). Android reads only the chosen folders. iOS has no camera-only folder, so it reads the whole library and hides screenshots and photos in folders that are switched off. Turning a folder off only hides it in Ninaivu; nothing is deleted.
+
+## Future ideas (owner, 2026-11-27, larger scale, not v1)
+- **Google Photos / cloud photos:** show photos stored in the cloud on their dates. Note: since March 2025 Google's Photos Library API only gives apps the photos they uploaded themselves; reading a user's whole library needs the Picker API, where the user selects photos. Revisit with Premium cloud backup.
+- **"On this day" notifications:** remind users what happened on this date in past years. Can be done locally (on-device scheduled notifications) without any cloud.
+- **Creatives from a day's photos:** auto collages, recap cards or short videos from a day, month or occasion, shareable.

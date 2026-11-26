@@ -4,7 +4,7 @@ import { getPersonalEvents } from './db';
  * Starter list of fixed-date occasions (month is 1-12). Lunar festivals such as
  * Diwali or Pongal move every year and need a yearly table; that comes next.
  */
-const FIXED: { month: number; day: number; name: string }[] = [
+export const FIXED_OCCASIONS: { month: number; day: number; name: string }[] = [
   { month: 1, day: 1, name: "New Year's Day" },
   { month: 1, day: 26, name: 'Republic Day' },
   { month: 2, day: 14, name: "Valentine's Day" },
@@ -26,7 +26,7 @@ export async function suggestionsForMonth(year: number, month: number): Promise<
     const key = `${year}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
     (out[key] ||= []).push(name);
   };
-  FIXED.forEach((o) => add(o.month, o.day, o.name));
+  FIXED_OCCASIONS.forEach((o) => add(o.month, o.day, o.name));
   (await getPersonalEvents()).forEach((e) =>
     add(e.month, e.day, e.kind === 'birthday' ? `${e.title}'s birthday` : e.title),
   );
