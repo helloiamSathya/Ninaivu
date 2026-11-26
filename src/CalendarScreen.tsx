@@ -2,6 +2,7 @@ import { COLORS, FONT } from './theme';
 import { useCallback, useEffect, useState } from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { MONTH_NAMES, WEEKDAYS, dayKey, monthGrid } from './dates';
+import { dayPastels } from './colors';
 import { getDayNames } from './db';
 import { suggestionsForMonth } from './occasions';
 import { loadMonthPhotos, Photo } from './photos';
@@ -15,6 +16,7 @@ export default function CalendarScreen({ onOpenDay, refreshToken }: Props) {
   const [photos, setPhotos] = useState<Record<string, Photo[]>>({});
   const [names, setNames] = useState<Record<string, string>>({});
   const [suggestions, setSuggestions] = useState<Record<string, string[]>>({});
+  const [tints, setTints] = useState<Record<string, string>>({});
 
   const load = useCallback(async () => {
     const prefix = `${year}-${String(month + 1).padStart(2, '0')}`;
@@ -26,6 +28,8 @@ export default function CalendarScreen({ onOpenDay, refreshToken }: Props) {
     setPhotos(p);
     setNames(n);
     setSuggestions(s);
+    setTints({});
+    dayPastels(p).then(setTints).catch(() => {});
   }, [year, month]);
 
   useEffect(() => {
@@ -70,11 +74,11 @@ export default function CalendarScreen({ onOpenDay, refreshToken }: Props) {
             return (
               <Pressable
                 key={j}
-                style={[styles.cell, key === todayKey && styles.today]}
+                style={[styles.cell, tints[key] && { backgroundColor: tints[key] }, key === todayKey && styles.today]}
                 onPress={() => onOpenDay(key, dayPhotos, suggestions[key] ?? [], names[key])}
               >
-                {dayPhotos[0] && <Image source={{ uri: dayPhotos[0].uri }} style={StyleSheet.absoluteFill} />}
-                <Text style={[styles.dayNum, dayPhotos[0] && styles.onPhoto]}>{date.getDate()}</Text>
+                <Text style={styles.dayNum}>{date.getDate()}</Text>
+                {dayPhotos[0] && <Image source={{ uri: dayPhotos[0].uri }} style={styles.thumb} />}
                 {dayPhotos.length > 1 && <Text style={styles.count}>{dayPhotos.length}</Text>}
                 {name && (
                   <Text numberOfLines={1} style={[styles.label, !names[key] && styles.suggested]}>
@@ -100,8 +104,8 @@ const styles = StyleSheet.create({
   cell: { flex: 1, aspectRatio: 0.7, margin: 1, backgroundColor: COLORS.surface, borderRadius: 10, overflow: 'hidden', padding: 3 },
   today: { borderWidth: 2, borderColor: COLORS.accent2 },
   dayNum: { fontFamily: FONT, fontSize: 12, fontWeight: '600' },
-  onPhoto: { color: COLORS.onPrimary, textShadowColor: COLORS.deep, textShadowRadius: 3 },
-  count: { position: 'absolute', top: 2, right: 4, fontFamily: FONT, fontSize: 10, color: COLORS.onPrimary, textShadowColor: COLORS.deep, textShadowRadius: 3 },
+  thumb: { position: 'absolute', top: 18, left: 4, right: 4, bottom: 14, borderRadius: 7 },
+  count: { position: 'absolute', top: 3, right: 4, fontFamily: FONT, fontSize: 10, color: COLORS.ink },
   label: { position: 'absolute', bottom: 0, left: 0, right: 0, fontFamily: FONT, fontSize: 9, backgroundColor: COLORS.primary, color: COLORS.onPrimary, paddingHorizontal: 2 },
   suggested: { backgroundColor: COLORS.accent2, fontStyle: 'italic' },
 });

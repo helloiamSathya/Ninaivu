@@ -16,6 +16,7 @@ function getDb() {
         month INTEGER NOT NULL,        -- 1-12
         day INTEGER NOT NULL
       );
+      CREATE TABLE IF NOT EXISTS photo_colors (photo_id TEXT PRIMARY KEY NOT NULL, color TEXT NOT NULL);
     `);
     return db;
   })();
@@ -58,4 +59,24 @@ export async function addPersonalEvent(e: Omit<PersonalEvent, 'id'>) {
     e.month,
     e.day,
   );
+}
+
+export async function getPhotoColors(ids: string[]): Promise<Record<string, string>> {
+  if (!ids.length) return {};
+  const db = await getDb();
+  const out: Record<string, string> = {};
+  for (let i = 0; i < ids.length; i += 500) {
+    const chunk = ids.slice(i, i + 500);
+    const rows = await db.getAllAsync<{ photo_id: string; color: string }>(
+      `SELECT photo_id, color FROM photo_colors WHERE photo_id IN (${chunk.map(() => '?').join(',')})`,
+      ...chunk,
+    );
+    for (const r of rows) out[r.photo_id] = r.color;
+  }
+  return out;
+}
+
+export async function setPhotoColor(id: string, color: string) {
+  const db = await getDb();
+  await db.runAsync('INSERT OR REPLACE INTO photo_colors (photo_id, color) VALUES (?, ?)', id, color);
 }
