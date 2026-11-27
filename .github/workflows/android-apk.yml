@@ -5,6 +5,9 @@ on:
     branches: [master, main, feat/v1-month-calendar]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   apk:
     runs-on: ubuntu-latest
@@ -32,3 +35,12 @@ jobs:
           name: ninaivu-test-apk
           path: android/app/build/outputs/apk/release/*.apk
           retention-days: 14
+      - name: Publish as the "Latest test build" download
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cp android/app/build/outputs/apk/release/app-release.apk ninaivu-test.apk
+          gh release delete test-latest --yes --cleanup-tag || true
+          gh release create test-latest ninaivu-test.apk --prerelease --target "$GITHUB_SHA" \
+            --title "Latest test build" \
+            --notes "Test build from ${GITHUB_REF_NAME} @ ${GITHUB_SHA::7}. Install on Android; not for the Play Store."
