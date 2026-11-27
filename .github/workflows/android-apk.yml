@@ -1,0 +1,46 @@
+name: Android test APK
+
+on:
+  push:
+    branches: [master, main, feat/v1-month-calendar]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      # The ubuntu runner already ships the Android SDK (ANDROID_HOME is set).
+      - run: npm ci
+      - run: npx tsc --noEmit
+      - name: Generate native Android project
+        run: npx expo prebuild --platform android --no-install
+      - name: Build release APK (signed with the debug key, for testing only)
+        working-directory: android
+        run: ./gradlew assembleRelease --no-daemon
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ninaivu-test-apk
+          path: android/app/build/outputs/apk/release/*.apk
+          retention-days: 14
+      - name: Publish as the "Latest test build" download
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cp android/app/build/outputs/apk/release/app-release.apk ninaivu-test.apk
+          gh release delete test-latest --yes --cleanup-tag || true
+          gh release create test-latest ninaivu-test.apk --prerelease --target "$GITHUB_SHA" \
+            --title "Latest test build" \
+            --notes "Test build from ${GITHUB_REF_NAME} @ ${GITHUB_SHA::7}. Install on Android; not for the Play Store."

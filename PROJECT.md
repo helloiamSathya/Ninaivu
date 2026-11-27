@@ -1,0 +1,78 @@
+# Ninaivu: project details
+
+Last updated: 2026-11-26. Owner: Sathya Narayanan S (GitHub: helloiamSathya).
+
+## What it is
+A photo calendar for iOS and Android. It shows each photo on the day it was taken and lets you name a day after its occasion (e.g. "Pongal", "Amma's birthday"). Meant for everyone. Tamil "Ninaivu" means "memory".
+
+## Decisions made
+| Topic | Decision |
+|---|---|
+| Platforms | iOS and Android, one codebase |
+| Version 1 | Local only: reads photos from the phone gallery, never copies them; deleted photos disappear from the calendar |
+| Day names | Manual naming plus suggestions from occasions (festivals, holidays, saved birthdays/anniversaries) |
+| Version 2 (Premium) | Cloud backup with high-quality compression, so backed-up photos stay in the calendar even if deleted from the phone |
+| Language | English only for Version 1 (confirmed "Yes") |
+| App name | Ninaivu (confirmed) |
+| Look | Rounded pill buttons, large rounded cards, dark pill bottom nav, week strip (layout style from the reference image) |
+| Colours | Owner's 5 colours: Space Indigo #151E3F, Prussian Blue #030027, Beige #F2F3D9, Light Bronze #DC9E82, Dusty Rose #C16E70 |
+| Pastel shades | Soft Pastel Shades (10 colours, EDDCD2 FFF1E6 FDE2E4 FAD2E1 C5DEDD DBE7E4 F0EFEB D6E2E9 BCD4E6 99C1DE) used with the 5 brand colours: cream FFF1E6 background, stone F0EFEB cards, sand EDDCD2 lines, pink FAD2E1 chips, blues for cool accents. Brand 5 stay for text, buttons, nav, today ring |
+| Logo | Wordmark "Ninaivu" in Gotti VF (design/brand/ninaivu-logo-gotti.svg); opening line-draw animation, then the app starts |
+| Font | Geist (variable font supplied by owner) |
+
+## Tech
+- React Native + Expo (TypeScript), expo-media-library (legacy API, per-month queries), expo-sqlite for day names and personal events.
+- Bundle IDs: `app.ninaivu.calendar` (iOS and Android).
+
+## Code
+- Repo: https://github.com/helloiamSathya/Ninaivu
+- Figma UI board: https://www.figma.com/design/ZFE2V9x9FcrpHvJvjpy21i (pages: Foundations, Screens with 16 wired screens, Flow map)
+- PR #1 (open): month calendar, day screen, SQLite names, occasion suggestions. https://github.com/helloiamSathya/Ninaivu/pull/1
+
+## Status
+- [x] Foundations spec
+- [x] Repo connected
+- [x] Version 1 first slice (PR #1, not yet tested on a real phone)
+- [x] UI mockups in the reference style, with Geist
+- [x] Figma UI board with navigation (16 screens, prototype wired)
+- [x] Palette and Splash line-draw animation in the app (stand-in outlines, see below)
+- [ ] Update the Figma board to the pastel shades (blocked: Figma plan call limit)
+- [ ] Rebuild app screens to match the Figma board (bottom nav, header, occasions, settings, premium)
+- [ ] Lunar festival dates table (Pongal, Diwali)
+- [ ] Screen to add birthdays/anniversaries
+- [ ] Device testing and beta builds (TestFlight, Google Play internal testing)
+- [ ] Version 2: Premium cloud backup design (backend, sign-in, subscriptions, compression)
+
+## What the owner needs to provide
+- Apple Developer account (about $99/year) and Google Play developer account ($25 one-time).
+- A real iPhone and Android phone for testing (gallery access needs a development build).
+
+## Open questions
+- Logo font: Gotti VF is not installed anywhere I can use. Please send the Gotti VF .ttf (or the logo converted to outlines) so the splash animation and Figma use the real wordmark. Until then a stand-in serif is used; regenerate with `python3 scripts/outline-logo.py <font.ttf> Ninaivu`.
+- Keep the Occasions tab shown in the mockups?
+- Backend choice for Version 2 (Supabase or Firebase are candidates).
+
+## Folder map (this shared folder, /mnt/project-files/ninaivu)
+- `PROJECT.md`: this file
+- `docs/`: written specs (`v1-spec.md`)
+- `design/reference/`: the reference UI image from the owner
+- `design/fonts/`: Geist-VariableFont_wght.ttf
+- `design/mockups/`: early PNG mockups (lilac, superseded by the Figma board)
+- `design/brand/`: logo SVG from the owner
+- `design/figma/`: exported previews of the Figma board
+
+## Day colours (decision, 2026-11-26)
+Calendar days with photos are tinted with the average colour of up to 4 of that day's photos, softened to a pastel (same hue, lightness 86%, saturation 30-55%) with a small photo inset. Per-photo colours are cached in SQLite (`photo_colors`). Android uses `average`; iOS has no average, so it uses `background`. Code: src/colors.ts. Mockup: design/mockups/4-pastel-calendar.png.
+
+## Gotti VF logo
+Adobe Fonts files cannot be exported. Activate Gotti VF in Illustrator/Photoshop/Express, type "Ninaivu", Type > Create Outlines, export SVG, and upload it. Check Adobe's licence before embedding the font itself in the app.
+
+Update 2026-11-27: real Gotti outlines received (assets/brand/ninaivu-logo-outlined.svg) and wired into src/logo/logoPaths.ts, so the splash now draws the real logo. Figma still shows the stand-in logo and the old palette because the Figma Starter plan's MCP call limit blocks edits again.
+
+## Photo sources (decision, 2026-11-27)
+The calendar shows camera photos only by default. Screenshots, WhatsApp and other chat or download folders stay off until the user switches them on in Settings > Photo sources (src/SourcesScreen.tsx, src/sources.ts). Android reads only the chosen folders. iOS has no camera-only folder, so it reads the whole library and hides screenshots and photos in folders that are switched off. Turning a folder off only hides it in Ninaivu; nothing is deleted.
+
+## Future ideas (owner, 2026-11-27, larger scale, not v1)
+- **Google Photos / cloud photos:** show photos stored in the cloud on their dates. Note: since March 2025 Google's Photos Library API only gives apps the photos they uploaded themselves; reading a user's whole library needs the Picker API, where the user selects photos. Revisit with Premium cloud backup.
+- **"On this day" notifications:** remind users what happened on this date in past years. Can be done locally (on-device scheduled notifications) without any cloud.
+- **Creatives from a day's photos:** auto collages, recap cards or short videos from a day, month or occasion, shareable.

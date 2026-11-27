@@ -1,15 +1,17 @@
 {
   "expo": {
-    "name": "ninaivu-app",
-    "slug": "ninaivu-app",
+    "name": "Ninaivu",
+    "slug": "ninaivu",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "app.ninaivu.calendar"
     },
     "android": {
+      "package": "app.ninaivu.calendar",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/android-icon-foreground.png",
@@ -18,6 +20,17 @@
       },
       "predictiveBackGestureEnabled": false
     },
+    "plugins": [
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "Ninaivu shows your photos on the day they were taken. Photos are only read, never copied or uploaded.",
+          "savePhotosPermission": false,
+          "isAccessMediaLocationEnabled": false
+        }
+      ],
+      "expo-sqlite"
+    ],
     "web": {
       "favicon": "./assets/favicon.png"
     }
